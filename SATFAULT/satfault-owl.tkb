@@ -1,0 +1,357 @@
+;; -*- mode: nclose -*-
+;;
+;; The NClosEmacs Project
+;;
+;; Historical rule base
+;; 	SATFAULT in new OWL clothes 
+;;	Tue Jan 20 16:11:58 2009
+
+(nclose-use-nclos ':OWL-LITE
+  (onto! 'SATFAULT
+	 ;; Classes
+	 (list
+	  (owl-class! 'Thing nil)
+	  (owl-class! 'actions 'Thing)
+	  (owl-class! 'tanks 'Thing)
+	  (owl-class! 'tanks_out 'tanks)
+	  (owl-class! 'tanks_lat 'tanks)
+	  (owl-class! 'tanks_in 'tanks)
+	  )
+	 ;; Individuals
+	 (list
+	  (owl-individual! 'tank_out_P3 'tanks_out)
+	  (owl-individual! 'tank_out_P4 'tanks_out)
+	  (owl-individual! 'tank_P1 'tanks_in)
+	  (owl-individual! 'tank_P2 'tanks_in)
+	  (owl-individual! 'tank_P3 'tanks_lat)
+	  (owl-individual! 'tank_P4 'tanks_lat)
+	  (owl-individual! 'tank_P5 'tanks)
+	  )
+	 ;; Properties
+	 (list
+	  (owl-property! 'duration 'actions 'Thing)
+	  (owl-property! 'severity 'actions 'Thing)
+	  (owl-property! 'skill_required 'actions 'Thing)
+	  (owl-property! 'fluid-nature 'tanks 'Thing)
+	  (owl-property! 'location 'tanks 'Thing)
+	  (owl-property! 'pressure 'tanks 'Thing)
+	  (owl-property! 'temperature 'tanks 'Thing)
+	  )
+	 ;; Slots
+	 nil
+	 )
+)
+
+;; Action rules
+;; The RHS of the next rule replaces the original 'Retrieve' operator
+(add-to-kb
+ (@if (and
+       (string= CRT_AND_KDU "AGREE")
+       (not (string= task "FLUID-TRANSFER"))
+       (Yes alarm_tank_was_P1_or_P2)
+       (Yes tank_P1_or_P2_was_high)
+       ))
+ (@hypo action-12)
+ (@then
+  (@set (prop-in 'tank_P1 'pressure) 200)
+  (@set (prop-in 'tank_P2 'pressure) 205)
+  (@set (prop-in 'tank_P3 'pressure) 300)
+  (@set (prop-in 'tank_P4 'pressure) 200)
+  (@set (prop-in 'tank_out_P3 'pressure) 200)
+  (@set (prop-in 'tank_out_P4 'pressure) 205)
+  (@set (prop-in 'tank_P5 'pressure) 200)
+  (@show "ACTION12.BMP")
+  )
+ "How to convert and display old MacPaint files?"
+)
+
+(add-to-kb
+ (@if (and
+       (string= CRT_AND_KDU "AGREE")
+       (not (string= task "FLUID-TRANSFER"))
+       (Yes alarm_tank_was_P1_or_P2)
+       (No tank_P1_or_P2_was_high)
+       ))
+ (@hypo action-14)
+ (@then
+  (@set (prop-in 'tank_P1 'pressure) 200)
+  (@set (prop-in 'tank_P2 'pressure) 205)
+  (@set (prop-in 'tank_P3 'pressure) 300)
+  (@set (prop-in 'tank_P4 'pressure) 200)
+  (@set (prop-in 'tank_out_P3 'pressure) 200)
+  (@set (prop-in 'tank_out_P4 'pressure) 205)
+  (@show "ACTION14.PNG")
+  )
+)
+
+(add-to-kb
+ (@if (and
+       (string= CRT_AND_KDU "AGREE")
+       (not (string= task "FLUID-TRANSFER"))
+       (Yes alarm_tank_was_P1_or_P2)
+       (/= (prop-in 'tank_out_P3 'pressure) (prop-in 'tank_out_P4 'pressure))
+       ))
+ (@hypo action-19)
+ (@then
+  (@set (prop-in 'tank_P1 'pressure) 200)
+  (@set (prop-in 'tank_P2 'pressure) 205)
+  (@set (prop-in 'tank_P3 'pressure) 300)
+  (@set (prop-in 'tank_P4 'pressure) 200)
+  (@show "ACTION19.PNG")
+  )
+)
+
+(add-to-kb
+ (@if (and
+       (string= CRT_AND_KDU "AGREE")
+       (string= task "FLUID-TRANSFER")
+       (Yes ALERT)
+       ))
+ (@hypo action-4)
+ (@then
+  (@set (prop-in 'tank_P1 'pressure) 200)
+  (@set (prop-in 'tank_P2 'pressure) 205)
+  (@set (prop-in 'tank_P3 'pressure) 300)
+  (@set (prop-in 'tank_P4 'pressure) 200)
+  (@set (prop-in 'tank_out_P3 'pressure) 200)
+  (@set (prop-in 'tank_out_P4 'pressure) 205)
+  (@show "ACTION.PNG")
+  )
+)
+
+;; Pressure alarm rules
+(add-to-kb
+ (@if (Yes investigate))
+ (@hypo ALERT)
+ (@then
+  (@set (prop-in 'tank_P1 'pressure) 500)
+  (@set (prop-in 'tank_P2 'pressure) 500)
+  (@set (prop-in 'tank_P3 'pressure) 300)
+  (@set (prop-in 'tank_P4 'pressure) 300)
+  (@set (prop-in 'tank_out_P3 'pressure) 200)
+  (@set (prop-in 'tank_out_P4 'pressure) 200)
+  )
+)
+
+
+(add-to-kb
+ (@if (some-in 'tanks_in 1 '(> pressure 370)))
+ (@hypo alarm_tank_was_high)
+)
+
+(add-to-kb
+ (@if (some-in 'tanks_lat 1 '(> pressure 460)))
+ (@hypo alarm_tank_was_high)
+)
+
+(add-to-kb
+ (@if (some-in 'tanks_in 1 '(> pressure 370)))
+ (@hypo alarm_tank_was_P1_or_P2)
+)
+
+(add-to-kb
+ (@if  (some-in 'tanks_in 1 '(< pressure 20)))
+ (@hypo alarm_tank_was_P1_or_P2)
+)
+
+(add-to-kb
+ (@if  (some-in 'tanks_out 1 '(> pressure 460)))
+ (@hypo ALERT)
+)
+
+(add-to-kb
+ (@if (some-in 'tanks_out 1 '(< pressure 20)))
+ (@hypo ALERT)
+)
+
+(add-to-kb
+ (@if  (some-in 'tanks_in 1 '(> pressure 460)))
+ (@hypo ALERT)
+)
+
+(add-to-kb
+ (@if  (some-in 'tanks_in 1 '(< pressure 20)))
+ (@hypo ALERT)
+)
+
+(add-to-kb
+ (@if  (some-in 'tanks_out 1 '(> pressure 460)))
+ (@hypo tanks-out-pressure-high)
+)
+
+(add-to-kb
+ (@if (some-in 'tanks_out 1 '(< pressure 20)))
+ (@hypo tanks-out-pressure-low)
+)
+
+(add-to-kb
+ (@if  (some-in 'tanks_in 1 '(> pressure 370)))
+ (@hypo tank_P1_or_P2_was_high)
+)
+
+(add-to-kb
+ (@if (= (prop-in 'tank_P2 'pressure) (prop-in 'tank_P4 'pressure)))
+ (@hypo tanks-equal)
+)
+
+(add-to-kb
+ (@if (= (prop-in 'tank_P1 'pressure) (prop-in 'tank_P3 'pressure)))
+ (@hypo tanks-equal)
+)
+
+
+;; Diagnosis rules
+(add-to-kb
+ (@if (and
+       (string= CRT_AND_KDU "AGREE")
+       (not (string= task "FLUID-TRANSFER"))
+       (No alarm_tank_was_P1_or_P2)
+       (= (prop-in 'tank_out_P3 'pressure) (prop-in 'tank_out_P4 'pressure))
+       ))
+ (@hypo DECREASE_DUE_TO_THERMAL_CONDITIONS)
+)
+
+(add-to-kb
+ (@if (and
+       (Yes action-12)
+       (= (prop-in 'tank_P2 'pressure) (prop-in 'tank_P5 'pressure))
+      ))
+ (@hypo EXC_P_RISE_V10)
+ (@then
+  (@show "DIAGNOS.PNG")
+  )
+)
+
+(add-to-kb
+ (@if (and
+       (Yes action-12)
+       (= (prop-in 'tank_P1 'pressure) (prop-in 'tank_P5 'pressure))
+      ))
+ (@hypo EXC_P_RISE_V3)
+ (@then
+  (@show "CONTACT_.PNG")
+  )
+)
+
+(add-to-kb
+ (@if (and
+       (Yes action-4)
+       (Yes tanks-equal)
+       (Yes alarm_tank_was_high)
+      ))
+ (@hypo EXC_P_RISE_V16)
+ (@then
+  (@show "ORS_1_8.PNG")
+  (@show "CONTACT_.PNG")
+  )
+)
+
+(add-to-kb
+ (@if (and
+       (string= CRT_AND_KDU "DISAGREE")
+       (Yes ALERT)
+      )
+      )
+ (@hypo MDM_ANALOG_INPUT_PARAMETER_LOSS)
+ (@then
+  (@show "MDM_A_I_.PNG")
+  )
+)
+
+(add-to-kb
+ (@if (and
+       (Yes action-14)
+       (Yes tanks-equal)
+      ))
+ (@hypo POSSIBLE_LEAK)
+ (@then
+  (@show "POSSIBLE.PNG")
+  (@show "CONTACT_.PNG")
+  )
+)
+
+(add-to-kb
+ (@if (and
+       (Yes action-4)
+       (Yes tanks-equal)
+       (No alarm_tank_was_high)
+      ))
+ (@hypo POSSIBLE_LEAK)
+ (@then
+  (@show "POSSIBLE.PNG")
+  (@show "CONTACT_.PNG")
+  )
+)
+
+(add-to-kb
+ (@if (and
+       (Yes action-19)
+       (Yes tanks-out-pressure-low)
+       (= (prop-in 'tank_out_P4 'pressure) (prop-in 'tank_out_P3 'pressure))
+      ))
+ (@hypo POSSIBLE_LEAK)
+ (@then
+  (@show "POSSIBLE.PNG")
+  (@show "CONTACT_.PNG")
+  )
+)
+
+
+(add-to-kb
+ (@if (and
+       (Yes action-19)
+       (Yes tanks-out-pressure-high)
+       (= (prop-in 'tank_out_P4 'pressure) (prop-in 'tank_out_P3 'pressure)))
+      )
+ (@hypo THERMAL_TRANSIENT_CONDITION)
+ (@then
+  (@show "CONTACT_.PNG")
+  )
+)
+
+(add-to-kb
+ (@if (and
+       (Yes action-4)
+       (No tanks-equal)
+      ))
+ (@hypo XDRC_FAILURE_OR_BIAS)
+ (@then
+  (@show "XDRC_FOB.PNG")
+  )
+)
+
+(add-to-kb
+ (@if (and
+       (Yes action-14)
+       (No tanks-equal)
+      ))
+ (@hypo XDRC_FAILURE_OR_BIAS)
+ (@then
+  (@show "XDRC_FOB.PNG")
+  )
+)
+
+(add-to-kb
+ (@if (and
+       (Yes action-19)
+       (/= (prop-in 'tank_out_P4 'pressure) (prop-in 'tank_out_P3 'pressure)))
+      )
+ (@hypo XDRC_FAILURE_OR_BIAS)
+ (@then
+  (@show "XDRC_FOB.PNG")
+  )
+)
+
+(add-to-kb
+ (@if (and
+       (Yes action-12)
+       (/= (prop-in 'tank_P2 'pressure) (prop-in 'tank_P5 'pressure))
+       (/= (prop-in 'tank_P1 'pressure) (prop-in 'tank_P5 'pressure)))
+      )
+ (@hypo XDRC_FAILURE_OR_BIAS)
+ (@then
+  (@show "XDRC_FOB.PNG")
+  )
+)
+
+;; (add-to-list 'load-path "c:/code/elisp/release")

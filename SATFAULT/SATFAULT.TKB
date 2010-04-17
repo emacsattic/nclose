@@ -1,0 +1,782 @@
+(@VERSION=	020)
+(@COMMENTS=	"@(#)satfault.tkb	1.5 90/10/09")
+(@COMMENTS=	"6272566")
+(@PROPERTY=	duration	@TYPE=Float;)
+(@PROPERTY=	fluid_nature	@TYPE=String;)
+(@PROPERTY=	length	@TYPE=Float;)
+(@PROPERTY=	location	@TYPE=String;)
+(@PROPERTY=	pressure	@TYPE=Float;)
+(@PROPERTY=	severity	@TYPE=String;)
+(@PROPERTY=	shape	@TYPE=String;)
+(@PROPERTY=	skill_required	@TYPE=String;)
+(@PROPERTY=	temperature	@TYPE=Float;)
+(@PROPERTY=	volume	@TYPE=Float;)
+
+
+(@CLASS=	actions
+	(@PROPERTIES=
+		duration
+		severity
+		skill_required
+	)
+)
+
+(@CLASS=	tanks
+	(@SUBCLASSES=
+		tanks_out
+		tanks_lat
+		tanks_in
+	)
+	(@PROPERTIES=
+		fluid_nature
+		location
+		pressure
+		temperature
+	)
+)
+
+(@CLASS=	tanks_in
+	(@PROPERTIES=
+		fluid_nature
+		location
+		pressure
+		temperature
+	)
+)
+
+(@CLASS=	tanks_lat
+	(@PROPERTIES=
+		fluid_nature
+		location
+		pressure
+		temperature
+	)
+)
+
+(@CLASS=	tanks_out
+	(@PROPERTIES=
+		fluid_nature
+		location
+		pressure
+		temperature
+	)
+)
+
+
+(@OBJECT=	action_12
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	action_14
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	action_19
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	action_4
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	alarm_tank_was_high
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	alarm_tank_was_P1_or_P2
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	ALERT
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	CRT_and_KDU
+	(@PROPERTIES=
+		Value	@TYPE=String;
+	)
+)
+
+(@OBJECT=	DECREASE_DUE_TO_THERMAL_CONDITIONS
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	EXC_P_RISE_V10
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	EXC_P_RISE_V16
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	EXC_P_RISE_V3
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	investigate_hypothesis
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	MDM_ANALOG_INPUT_PARAMETER_LOSS
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	n
+	(@PROPERTIES=
+		Value	@TYPE=Float;
+	)
+)
+
+(@OBJECT=	POSSIBLE_LEAK
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	problem
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	START
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	tank_out_P3
+	(@CLASSES=
+		tanks_out
+	)
+	(@SUBOBJECTS=
+		wall
+		valve_3_1
+		valve_3_2
+	)
+	(@PROPERTIES=
+		fluid_nature
+		length
+		location
+		pressure
+		shape
+		temperature
+		Value	@TYPE=Float;
+		volume
+	)
+)
+
+(@OBJECT=	tank_out_P4
+	(@CLASSES=
+		tanks_out
+	)
+	(@PROPERTIES=
+		fluid_nature
+		length
+		location
+		pressure
+		shape
+		temperature
+		Value	@TYPE=Float;
+		volume
+	)
+)
+
+(@OBJECT=	tank_out_pressure_high
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	tank_out_pressure_low
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	tank_P1
+	(@CLASSES=
+		tanks_in
+	)
+	(@PROPERTIES=
+		fluid_nature
+		length
+		location
+		pressure
+		shape
+		temperature
+		Value	@TYPE=Float;
+		volume
+	)
+)
+
+(@OBJECT=	tank_P1_or_P2_was_high
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	tank_P2
+	(@CLASSES=
+		tanks_in
+	)
+	(@PROPERTIES=
+		fluid_nature
+		length
+		location
+		pressure
+		shape
+		temperature
+		Value	@TYPE=Float;
+		volume
+	)
+)
+
+(@OBJECT=	tank_P3
+	(@CLASSES=
+		tanks_lat
+	)
+	(@PROPERTIES=
+		fluid_nature
+		length
+		location
+		pressure
+		shape
+		temperature
+		Value	@TYPE=Float;
+		volume
+	)
+)
+
+(@OBJECT=	tank_P4
+	(@CLASSES=
+		tanks_lat
+	)
+	(@PROPERTIES=
+		fluid_nature
+		location
+		pressure
+		temperature
+		Value	@TYPE=Float;
+	)
+)
+
+(@OBJECT=	tank_P5
+	(@PROPERTIES=
+		pressure
+		Value	@TYPE=Float;
+	)
+)
+
+(@OBJECT=	tanks_equal
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	task
+	(@PROPERTIES=
+		Value	@TYPE=String;
+	)
+)
+
+(@OBJECT=	THERMAL_TRANSIENT_CONDITION
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	valve_3_1
+)
+
+(@OBJECT=	valve_3_2
+)
+
+(@OBJECT=	vradio
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@OBJECT=	wall
+)
+
+(@OBJECT=	XDRC_FAILURE_OR_BIAS
+	(@PROPERTIES=
+		Value	@TYPE=Boolean;
+	)
+)
+
+(@SLOT=	alarm_tank_was_high
+	@INFCAT=2;
+)
+
+(@SLOT=	alarm_tank_was_P1_or_P2
+	@INFCAT=2;
+)
+
+(@SLOT=	CRT_and_KDU
+	@PROMPT="Do the two displays (CRT and KDU) agree or disagree?";
+)
+
+(@SLOT=	investigate_hypothesis
+	@INFCAT=4;
+)
+
+(@SLOT=	n
+	@INFCAT=3;
+)
+
+(@SLOT=	tank_P1_or_P2_was_high
+	@INFCAT=2;
+)
+
+(@SLOT=	task
+	@PROMPT="During which task did the problem occur?";
+)
+
+(@RULE=	R1
+	(@LHS=
+		(Is	(CRT_and_KDU)	("AGREE"))
+		(IsNot	(task)	("FLUID-TRANSFER"))
+		(Yes	(alarm_tank_was_P1_or_P2))
+		(Yes	(tank_P1_or_P2_was_high))
+	)
+	(@HYPO=	action_12)
+	(@RHS=
+		(Show	("action"))
+		(Do	(n+1.0)	(n))
+		(Retrieve	("tanks"))
+		(Retrieve	("ext_tank"))
+	)
+)
+
+(@RULE=	R2
+	(@LHS=
+		(Is	(CRT_and_KDU)	("AGREE"))
+		(IsNot	(task)	("FLUID-TRANSFER"))
+		(Yes	(alarm_tank_was_P1_or_P2))
+		(No	(tank_P1_or_P2_was_high))
+	)
+	(@HYPO=	action_14)
+	(@RHS=
+		(Show	("action_14"))
+		(Retrieve	("tanks"))
+	)
+)
+
+(@RULE=	R3
+	(@LHS=
+		(Is	(CRT_and_KDU)	("AGREE"))
+		(IsNot	(task)	("FLUID-TRANSFER"))
+		(No	(alarm_tank_was_P1_or_P2))
+		(<>	((tank_out_P3.pressure)-(tank_out_P4.pressure))	(0.0))
+	)
+	(@HYPO=	action_19)
+	(@RHS=
+		(Show	("action_19"))
+		(Do	(n+1.0)	(n))
+		(Retrieve	("tanks"))
+	)
+)
+
+(@RULE=	R4
+	(@LHS=
+		(Is	(CRT_and_KDU)	("AGREE"))
+		(Is	(task)	("FLUID-TRANSFER"))
+		(Yes	(ALERT))
+	)
+	(@HYPO=	action_4)
+	(@RHS=
+		(Show	("action_4"))
+		(Retrieve	("tanks"))
+		(Retrieve	("ext_tank"))
+	)
+)
+
+(@RULE=	R6
+	(@LHS=
+		(>=	(<|tanks_in|>.pressure)	(370.0))
+	)
+	(@HYPO=	alarm_tank_was_high)
+)
+
+(@RULE=	R5
+	(@LHS=
+		(>=	(<|tanks_lat|>.pressure)	(460.0))
+	)
+	(@HYPO=	alarm_tank_was_high)
+)
+
+(@RULE=	R8
+	(@LHS=
+		(>=	(<|tanks_in|>.pressure)	(370.0))
+	)
+	(@HYPO=	alarm_tank_was_P1_or_P2)
+)
+
+(@RULE=	R7
+	(@LHS=
+		(<=	(<|tanks_in|>.pressure)	(20.0))
+	)
+	(@HYPO=	alarm_tank_was_P1_or_P2)
+)
+
+(@RULE=	R12
+	(@LHS=
+		(>=	(<|tanks_in|>.pressure)	(370.0))
+	)
+	(@HYPO=	ALERT)
+)
+
+(@RULE=	R11
+	(@LHS=
+		(>=	(<|tanks_out|>.pressure)	(460.0))
+	)
+	(@HYPO=	ALERT)
+)
+
+(@RULE=	R10
+	(@LHS=
+		(<=	(<|tanks_out|>.pressure)	(20.0))
+	)
+	(@HYPO=	ALERT)
+)
+
+(@RULE=	R9
+	(@LHS=
+		(<=	(<|tanks_in|>.pressure)	(20.0))
+	)
+	(@HYPO=	ALERT)
+)
+
+(@RULE=	R14
+	(@LHS=
+		(Yes	(investigate_hypothesis))
+		(>	(n)	(0.0))
+	)
+	(@HYPO=	DECREASE_DUE_TO_THERMAL_CONDITIONS)
+)
+
+(@RULE=	R13
+	(@LHS=
+		(Is	(CRT_and_KDU)	("AGREE"))
+		(IsNot	(task)	("FLUID-TRANSFER"))
+		(No	(alarm_tank_was_P1_or_P2))
+		(=	((tank_out_P3.pressure)-(tank_out_P4.pressure))	(0.0))
+	)
+	(@HYPO=	DECREASE_DUE_TO_THERMAL_CONDITIONS)
+	(@RHS=
+		(Show	("DECREASE-THERM-COND"))
+	)
+)
+
+(@RULE=	R16
+	(@LHS=
+		(Yes	(investigate_hypothesis))
+		(>	(n)	(0.0))
+	)
+	(@HYPO=	EXC_P_RISE_V10)
+)
+
+(@RULE=	R15
+	(@LHS=
+		(Yes	(action_12))
+		(=	((tank_P2.pressure)-(tank_P5.pressure))	(0.0))
+	)
+	(@HYPO=	EXC_P_RISE_V10)
+	(@RHS=
+		(Show	("diagnos"))
+	)
+)
+
+(@RULE=	R18
+	(@LHS=
+		(Yes	(investigate_hypothesis))
+		(>	(n)	(0.0))
+	)
+	(@HYPO=	EXC_P_RISE_V16)
+)
+
+(@RULE=	R17
+	(@LHS=
+		(Yes	(action_4))
+		(Yes	(tanks_equal))
+		(Yes	(alarm_tank_was_high))
+	)
+	(@HYPO=	EXC_P_RISE_V16)
+	(@RHS=
+		(Show	("ORS_1_8"))
+		(Show	("CONTACT_MCC_1"))
+	)
+)
+
+(@RULE=	R20
+	(@LHS=
+		(Yes	(investigate_hypothesis))
+		(>	(n)	(0.0))
+	)
+	(@HYPO=	EXC_P_RISE_V3)
+)
+
+(@RULE=	R19
+	(@LHS=
+		(Yes	(action_12))
+		(=	((tank_P1.pressure)-(tank_P5.pressure))	(0.0))
+	)
+	(@HYPO=	EXC_P_RISE_V3)
+	(@RHS=
+		(Show	("ORS_1_4"))
+		(Show	("CONTACT_MCC_1"))
+	)
+)
+
+(@RULE=	R21
+	(@LHS=
+		(Name	((0.0)-(1.0))	(n))
+	)
+	(@HYPO=	investigate_hypothesis)
+	(@RHS=
+		(Strategy	(@PFACTIONS=FALSE;))
+		(Retrieve	("tankst0"))
+	)
+)
+
+(@RULE=	R22
+	(@LHS=
+		(Is	(CRT_and_KDU)	("DISAGREE"))
+		(Yes	(ALERT))
+	)
+	(@HYPO=	MDM_ANALOG_INPUT_PARAMETER_LOSS)
+	(@RHS=
+		(Show	("MDM-A-I-P-LOSS"))
+	)
+)
+
+(@RULE=	R26
+	(@LHS=
+		(Yes	(action_4))
+		(Yes	(tanks_equal))
+		(No	(alarm_tank_was_high))
+	)
+	(@HYPO=	POSSIBLE_LEAK)
+	(@RHS=
+		(Show	("POSSIBLE_LEAK"))
+		(Show	("CONTACT-MCC-10"))
+	)
+)
+
+(@RULE=	R25
+	(@LHS=
+		(Yes	(action_14))
+		(Yes	(tanks_equal))
+	)
+	(@HYPO=	POSSIBLE_LEAK)
+	(@RHS=
+		(Show	("POSSIBLE_LEAK"))
+		(Show	("CONTACT-MCC-17"))
+	)
+)
+
+(@RULE=	R24
+	(@LHS=
+		(Yes	(investigate_hypothesis))
+		(>	(n)	(0.0))
+	)
+	(@HYPO=	POSSIBLE_LEAK)
+)
+
+(@RULE=	R23
+	(@LHS=
+		(Yes	(action_19))
+		(Yes	(tank_out_pressure_low))
+		(=	((tank_out_P4.pressure)-(tank_out_P3.pressure))	(0.0))
+	)
+	(@HYPO=	POSSIBLE_LEAK)
+	(@RHS=
+		(Show	("POSSIBLE_LEAK"))
+		(Show	("CHECK-MCC"))
+	)
+)
+
+(@RULE=	R27
+	(@LHS=
+		(Name	((0.0))	(n))
+		(Yes	(problem))
+	)
+	(@HYPO=	START)
+	(@RHS=
+		(Strategy	(@PFACTIONS=FALSE;))
+		(Retrieve	("tankst0"))
+		(Let	(investigate_hypothesis)	(FALSE))
+	)
+)
+
+(@RULE=	R28
+	(@LHS=
+		(>=	(<|tanks_out|>.pressure)	(460.0))
+	)
+	(@HYPO=	tank_out_pressure_high)
+)
+
+(@RULE=	R29
+	(@LHS=
+		(<=	(<|tanks_out|>.pressure)	(20.0))
+	)
+	(@HYPO=	tank_out_pressure_low)
+)
+
+(@RULE=	R30
+	(@LHS=
+		(>=	(<|tanks_in|>.pressure)	(370.0))
+	)
+	(@HYPO=	tank_P1_or_P2_was_high)
+)
+
+(@RULE=	R32
+	(@LHS=
+		(=	((tank_P2.pressure)-(tank_P4.pressure))	(0.0))
+	)
+	(@HYPO=	tanks_equal)
+)
+
+(@RULE=	R31
+	(@LHS=
+		(=	((tank_P1.pressure)-(tank_P3.pressure))	(0.0))
+	)
+	(@HYPO=	tanks_equal)
+)
+
+(@RULE=	R34
+	(@LHS=
+		(Yes	(investigate_hypothesis))
+		(>	(n)	(0.0))
+	)
+	(@HYPO=	THERMAL_TRANSIENT_CONDITION)
+)
+
+(@RULE=	R33
+	(@LHS=
+		(Yes	(action_19))
+		(Yes	(tank_out_pressure_high))
+		(=	((tank_out_P4.pressure)-(tank_out_P3.pressure))	(0.0))
+	)
+	(@HYPO=	THERMAL_TRANSIENT_CONDITION)
+	(@RHS=
+		(Show	("THERM-TRANS-COND"))
+		(Show	("CLOSE-V16-24"))
+	)
+)
+
+(@RULE=	R36
+	(@LHS=
+		(Is	(task)	("TESTING"))
+	)
+	(@HYPO=	vradio)
+)
+
+(@RULE=	R35
+	(@LHS=
+		(Is	(task)	("ATTACHING"))
+	)
+	(@HYPO=	vradio)
+)
+
+(@RULE=	R41
+	(@LHS=
+		(Yes	(action_4))
+		(No	(tanks_equal))
+	)
+	(@HYPO=	XDRC_FAILURE_OR_BIAS)
+	(@RHS=
+		(Show	("XDRC-FOB"))
+	)
+)
+
+(@RULE=	R40
+	(@LHS=
+		(Yes	(action_14))
+		(No	(tanks_equal))
+	)
+	(@HYPO=	XDRC_FAILURE_OR_BIAS)
+	(@RHS=
+		(Show	("XDRC-FOB"))
+	)
+)
+
+(@RULE=	R39
+	(@LHS=
+		(Yes	(investigate_hypothesis))
+		(>	(n)	(0.0))
+	)
+	(@HYPO=	XDRC_FAILURE_OR_BIAS)
+)
+
+(@RULE=	R38
+	(@LHS=
+		(Yes	(action_19))
+		(<>	((tank_out_P3.pressure)-(tank_out_P4.pressure))	(0.0))
+	)
+	(@HYPO=	XDRC_FAILURE_OR_BIAS)
+	(@RHS=
+		(Show	("XDRC-FOB"))
+		(Show	("OPEN-V16-24"))
+	)
+)
+
+(@RULE=	R37
+	(@LHS=
+		(Yes	(action_12))
+		(<>	((tank_P2.pressure)-(tank_P5.pressure))	(0.0))
+		(<>	((tank_P1.pressure)-(tank_P5.pressure))	(0.0))
+	)
+	(@HYPO=	XDRC_FAILURE_OR_BIAS)
+	(@RHS=
+		(Show	("XDRC_FAILURE_OR_BIAS"))
+	)
+)
+
+(@GLOBALS=
+	@INHVALUP=FALSE;
+	@INHVALDOWN=TRUE;
+	@INHOBJUP=FALSE;
+	@INHOBJDOWN=FALSE;
+	@INHCLASSUP=FALSE;
+	@INHCLASSDOWN=TRUE;
+	@INHBREADTH=TRUE;
+	@INHPARENT=FALSE;
+	@PWTRUE=TRUE;
+	@PWFALSE=TRUE;
+	@PWNOTKNOWN=TRUE;
+	@EXHBWRD=TRUE;
+	@PTGATES=TRUE;
+	@PFACTIONS=TRUE;
+	@SOURCESON=TRUE;
+	@CACTIONSON=TRUE;
+)

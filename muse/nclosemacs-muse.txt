@@ -1,0 +1,34 @@
+#author jmc
+#date Sat Dec 19 16:30:32 2009
+#title An Example NClosEmacs-Muse Document
+
+This short example document illustrates the use of NClosEmacs knowledge bases in producing documents in the Emacs Muse environment.  This instance uses the "satfault" example knowledge base (namely <code>satfault-owl.tkb</code>, its OWL-Lite object system implementation).
+
+As in all knowledge-based documents, the initial steps is to load the NClosEmacs library and the knowledge bases we'll be using throughout the document.  This is done in the following tag, which when executed simply publishes the list of knowledge bases successfully loaded, namely here:
+
+
+<lisp>
+(require 'nclosemacs)
+(require 'nclosemacs-muse-helper)
+(nclose-loadkb "SATFAULT/satfault-owl.tkb")
+</lisp>
+
+The next step is to initialize the session attached to the document publication process itself.  This is usually done by resetting the session, suggesting the relevant hypotheses and volunteering the appropriate information.  This prolog is placed at the top of the document.
+
+<lisp>
+(agenda-suggest "EXC_P_RISE_V16")
+(nclose-knowcess)
+</lisp>
+
+Hypotheses are suggested via the <code>(agenda-suggest "hypo")</code> invocation, while data is volunteered via the <code>agenda-volunteer</code> function.  The prolog usually ends by calling the rule engine with the <code>(nclose-knowcess)</code> form.
+
+Note that when invoking the <code>muse-publish-this-file</code> command in Emacs, the publication process loads the knowledge base and executes the prolog fragment in the order in which it appears in the document.  If the session happens to be interactive, user dialog will appear in the message box, with all the auto-completions facilities of NClosEmacs available.
+
+Once the session is finished running, its results can be directly embedded in the text following the knowcess call.  Within the body of the text, simply use the <code><lisp>(nclose-slot-value object property)</lisp></code> to replace at publish time with the value as processed by the knowlege base.  For an hypothesis use <code><lisp>(nclose-hypo-value object property)</lisp></code> instead.
+
+For instance here, we now know that the pressure of tank_P2 is <lisp>(nclose-slot-value 'tank_P2 'pressure)</lisp> and that consequently EXC_P_RISE_V16 is <lisp>(nclose-hypo-value 'EXC_P_RISE_V16)</lisp>, since the proverbial CTR_AND_KDU has been set to <lisp>(nclose-slot-value 'CRT_AND_KDU)</lisp>!
+
+
+
+
+

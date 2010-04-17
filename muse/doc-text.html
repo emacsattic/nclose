@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>NClosEmacs for Muse: Text-Oriented Knowledge Services</title>
+    <meta name="generator" content="muse.el">
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=iso-8859-1">
+    <style type="text/css">
+body {
+  background: white; color: black;
+  margin-left: 3%; margin-right: 7%;
+}
+
+p { margin-top: 1% }
+p.verse { margin-left: 3% }
+
+.example { margin-left: 3% }
+
+h2 {
+  margin-top: 25px;
+  margin-bottom: 0px;
+}
+h3 { margin-bottom: 0px; }
+    </style>
+  </head>
+  <body>
+    <h1>NClosEmacs for Muse: Text-Oriented Knowledge Services</h1>
+    <!-- Page published by Emacs Muse begins here -->
+<p>This document describes text-oriented knowledge services using NClosEmacs.  It combines the text orientation of the flexible Emacs editor with NClosEmacs, a tentative implementation of the
+NClose rules engine in ELisp for embedding expert system functionality
+in the Emacs environment.</p>
+
+<h2>Motivation and Introduction</h2>
+
+<p class="first">Emacs is the well known extensible, customizable, self-documenting real-time display editor.  Among its many uses in editing at large, producing text &mdash; whether literary, technical or other &mdash; is probably the most obvious one.  This is apparent in many ways: the interactive display editor which appeals to end-users for authoring and composing textual documents; the comprehensive library of Emacs Lisp functions related to buffer and text manipulations in its extensive set of libraries; and the variety of externally developed Emacs libraries for authoring and formatting text documents available on Emacs-related community sites (notably EmacsWiki).</p>
+
+<p>With NClosEmacs, expert system based functionality is made readily available in the Emacs environment.  Combined with the aforementioned text orientation, it affords what we'll emphatically call <em>text-oriented knowledge services</em> to the Emacs author.</p>
+
+<p>In the following sections we illustrate text-oriented knowledge services in the embedded use of NClosEmacs in a popular Emacs-based authoring environment, Muse.  While the actual embedding itself is Muse-dependent, the generic process of using NClosEmacs as an embedded service provider is not &mdash; the same ideas could be used with <code>org-mode</code> for instance.  This document then also provides guidelines for embedding knowledge-based services into other Emacs-related environments and extensions. (In particular, conjunction of NClosEmacs and Emacs' subprocesses could bear interesting fruits in the provision of Emacs knowledge-based services to external programs.)</p>
+
+
+<h2>Text-Oriented Knowledge Services</h2>
+
+<h3>Muse</h3>
+
+<p class="first">This document relies on Muse, which was written by John Wiegley and is
+now maintained by Michael Olson.  Several versions of the Muse manual are available on-line.</p>
+
+<blockquote>
+<p class="quoted">* PDF: <a href="http://mwolson.org/static/doc/muse.pdf">http://mwolson.org/static/doc/muse.pdf</a></p>
+</blockquote>
+
+<blockquote>
+<p class="quoted">* HTML (single file): <a href="http://mwolson.org/static/doc/muse.html">http://mwolson.org/static/doc/muse.html</a></p>
+</blockquote>
+
+<blockquote>
+<p class="quoted">* HTML (multiple files): <a href="http://mwolson.org/static/doc/muse/">http://mwolson.org/static/doc/muse/</a></p>
+</blockquote>
+
+<p>From this documentation, &quot;Emacs Muse (also known as &quot;Muse&quot; or &quot;Emacs-Muse&quot;) is an authoring and publishing environment for Emacs.&quot;  It simplifies the process of writing documents and publishing them to various output formats.</p>
+
+<p>Muse consists of two main parts: an enhanced text-mode for authoring
+documents and navigating within Muse projects, and a set of publishing
+styles for generating different kinds of output.</p>
+
+<p>What makes Muse distinct from other text-publishing systems is a
+modular environment, with a rather simple core, in which &quot;styles&quot; are
+derived from to create new styles.  Much of Muse's overall
+functionality is optional.  For example, you can use the publisher
+without the major-mode, or the mode without doing any publishing; or if you don't load the Texinfo or LaTeX modules, those styles won't be
+available.</p>
+
+<p>Additionally, Muse is &mdash; true to Emacs' inspiration and spirit &mdash; easily extensible both in terms of new styles and new functionality.  We'll rely on the later extensibility feature to embed NClosEmacs into the Muse authoring environment.</p>
+
+
+<h3>Obtaining Released Versions of Muse</h3>
+
+<p class="first">Debian users can get Muse via apt-get.  The `muse-el' package is
+available both at Michael Olson's APT repository and the official Debian repository.  To make use of the former, add the following line to your <code>`/etc/apt/sources.list'</code> file and run <code>`apt-get install muse'</code>.</p>
+
+<center>
+<p><code>deb http://mwolson.org/debian/ ./</code></p>
+</center>
+
+<p>Ubuntu users can also get Muse via apt-get.  The `muse-el' package
+is available both at Michael Olson's APT repository and the official
+Ubuntu repository.  To make use of the former, add the following line to your <code>`/etc/apt/sources.list'</code> file and run <code>`apt-get install muse'</code>.</p>
+
+<center>
+<p><code>deb http://mwolson.org/ubuntu/ ./</code></p>
+</center>
+
+<p>The reason for making separate Debian and Ubuntu packages is that
+the Muse manual is under the GFDL, and Debian will not allow it to be
+distributed in its main repository.  Ubuntu, on the other hand, permits this manual to be included with the <code>`muse-el'</code> package.</p>
+
+<p>Alternatively, you can download the latest release from
+`<a href="http://download.gna.org/muse-el/">http://download.gna.org/muse-el/</a>' .</p>
+
+
+
+<h3>Embedding NClosEmacs in Muse</h3>
+
+<p class="first">With the Muse authoring environment, text is entered with generic markup rules and tags to instruct the Muse formatting engine.  The Muse engine can produce documents in various styles, ranging from HTML to LaTeX, info and pdf, from the same source. In addition, there are several Muse major modes for Emacs to assist in document authoring and producing. (See Muse Documentation.)</p>
+
+<p>In Muse the extensibility tag <code>lisp</code> is used to embed executable ELisp code in a document.  The code is executed when the document is published, as a side effect of the <code>muse-publish</code> set of commands.</p>
+
+
+<p>When Muse encounters <code>&lt;lisp&gt;(concat &quot;this &quot; &quot;form&quot;)&lt;/lisp&gt;</code> in the body of the document to be published, it actually replaces the tag content by the result of the Emacs Lisp form evaluation, namely the string &quot;this form&quot; in this example.</p>
+
+<p>The embedding of NClosEmacs in a Muse document is then simply a matter of inserting the high-level <code>&lt;lisp/&gt;</code> markup calls to the NClosEmacs expert system library at the proper articulation points in the text.</p>
+
+
+<h3>The Muse Helper</h3>
+
+<p class="first">The Emacs Lisp file <code>nclosemacs-muse-helper.el</code> contains high-level user functions for the integration of NClosEmacs-based knowledge services into a Muse document.  An complete example of its use is provided in the <code>nclosemacs-muse.txt</code> document.</p>
+
+<p>The Helper defines the following functions to be used within the <code>&lt;lisp/&gt;</code> markup tag in a Muse document:</p>
+
+<dl>
+<dt><strong>&mdash; Function: nclose-loadkb kb-file</strong></dt><dd>
+This function loads a the knowledge base specified by the filename    passed as argument, if not already present in memory.  It returns the list of in-memory knowledge bases.</dd>
+
+<dt><strong>&mdash; Function: nclose-slot-value object &amp;optional property</strong></dt><dd>
+This returns either the value of the slot if `property' is present, or the value of the sign `object' if no property is specified.</dd>
+
+<dt><strong>&mdash; Function: nclose-hypo-value hypo</strong></dt><dd>
+This function returns the string &quot;true&quot; or &quot;false&quot; according to the status of the passed hypothesis.</dd>
+</dl>
+
+<p>Please note that the last two functions may trigger the rules engine if the values are <code>UNKNOWN</code> yet at publish time.</p>
+
+<p>The session itself is controlled directly through calls to the NClosEmacs API, for instance:</p>
+
+<dl>
+<dt><strong>&mdash; Function: agenda-suggest hypo-name</strong></dt><dd>
+This function puts the hypothesis `hypo-name' (a string) on top of the agenda for evaluation.</dd>
+
+<dt><strong>&mdash; Function: agenda-volunteer sign-name value</strong></dt><dd>
+This function is used to volunteer a value for a sign.</dd>
+
+<dt><strong>&mdash; Function: nclose-knowcess</strong></dt><dd>
+This is the usual call to run a session of the rule engine.  Interactions happens in the standard message buffer at the bottom of the Emacs window, as in interactive NClosEmacs sessions.</dd>
+
+<dt><strong>&mdash; Function: nclose-reset-session</strong></dt><dd>
+Use this function to reset the whole session.  Usually found at the top of the document before the prolog, it may be used within the body of the document for later side-effects.</dd>
+</dl>
+
+<p>The Helper needs to be included with the NClosEmacs library, usually near the top of the document with the following markup text:</p>
+
+<pre class="example">
+&lt;lisp&gt;
+(require 'nclosemacs)
+(require 'nclosemacs-muse-helper)
+&lt;/lisp&gt;
+</pre>
+
+<p>which sets everything up.</p>
+
+
+
+
+<h2>Conclusions</h2>
+
+<p class="first">Integration of NClosEmacs into standard or popular Emacs modules has been demonstrated here with the Muse authoring environment.  In this instance, the work is made simple as Muse does support extensions to its publishing process through the liberal use of the <code>&lt;lisp/&gt;</code> tag.  Other Emacs modules may have different extension hooks &mdash; usually in the form of Emacs Lisp function templates &mdash; which can be similarly used to embed NClosEmacs-built knowledge services. (Examples that come to mind are mail, document authoring or workflow, and external computing environment with an Emacs fornt-end.)</p>
+
+
+
+<!-- Page published by Emacs Muse ends here -->
+  </body>
+</html>
