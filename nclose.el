@@ -9,6 +9,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; License: GPL-3+
+
 ;; An experimental implementation of NClose in ELisp for Emacs
 
 ;; This implementation relies on the now well understood formalization of the agenda, the Nclose control structure for goal evaluation tasks, as a bidirectional stack.  This implementation is also a first experiment with aspect-oriented programming concepts developed during the 90s.  Interestingly, these intervening ideas although not pertaining to AI research per se, originally stemmed from practical work on Common Lisp and, more specifically, on CLOS, its object-oriented extension.
